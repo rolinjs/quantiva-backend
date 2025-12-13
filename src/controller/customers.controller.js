@@ -489,9 +489,7 @@ export const getAllCustomersController = async (req, res) => {
     const customers = await getAllCustomersModel();
     res.json(customers);
   } catch (error) {
-    console.error(error);
-    res.status(500).json({
-      message: 'Error al obtener clientes'
-    });
+    console.error('❌ ERROR getAllCustomers:', error.message);
+    res.status(500).json({ message: 'Error al obtener clientes' });
   }
 };
