@@ -111,6 +111,6 @@ export const updatePasswordById = async (id_uuid, password_hash) => {
 
 export const getAllCustomersModel = async () => {
     const sql = `SELECT * FROM clientes`;
-    const { rows } = await pool.query(query);
+    const { rows } = await pool.query(sql);
     return rows;
 }
