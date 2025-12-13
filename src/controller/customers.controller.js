@@ -6,7 +6,8 @@ import {
     obtenerClientePorIdModel,
     saveResetTokenModel,
     updatePasswordById,
-    findCustomerByResetToken
+    findCustomerByResetToken,
+    getAllCustomersModel
 } from '../model/customers.model.js';
 
 import { transporter } from '../config/mailer.js'
@@ -481,4 +482,16 @@ export const validateResetTokenController = async (req, res) => {
             message: 'Error interno del servidor'
         });
     }
+};
+
+export const getAllCustomersController = async (req, res) => {
+  try {
+    const customers = await getAllCustomersModel();
+    res.json(customers);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({
+      message: 'Error al obtener clientes'
+    });
+  }
 };

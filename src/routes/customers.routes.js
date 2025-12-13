@@ -8,7 +8,8 @@ import {
     obtenerPerfilClienteController,
     forgotPasswordController,
     resetPasswordController,
-    validateResetTokenController
+    validateResetTokenController,
+    getAllCustomersController
 } from '../controller/customers.controller.js'
 import { authenticateToken } from '../middleware/auth.js';
 
@@ -16,6 +17,9 @@ import { authenticateToken } from '../middleware/auth.js';
 const router = Router();
 
 // Registrar cliente + enviar código
+//OBtener todos
+router.get('/all', getAllCustomersController);
+
 router.post('/created', createCustomersController);
 // Verificar código recibido por correo
 router.post('/verify-code', verifyCodeController);
