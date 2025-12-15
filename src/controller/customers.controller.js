@@ -49,15 +49,8 @@ export const createCustomersController = async (req, res) => {
       verification_expires: expiration
     });
 
-    // RESPONDER AL FRONT PRIMERO
-    res.status(201).json({
-      success: true,
-      message: 'Cliente registrado correctamente',
-      data: cliente
-    });
-
     // ENVIAR EMAIL EN SEGUNDO PLANO (SIN await)
-    transporter.sendMail({
+    await transporter.sendMail({
       from: `"Quantiva" <TuCorreo@gmail.com>`,
       to: email,
       subject: "Código de verificación",
@@ -67,17 +60,20 @@ export const createCustomersController = async (req, res) => {
         <h1>${code}</h1>
         <p>Este código expira en 10 minutos.</p>
       `
-    }).then(() => {
-      console.log('📧 Email enviado');
-    }).catch(err => {
-      console.error('❌ Error email:', err.message);
+    })
+
+    // RESPONDER AL FRONT PRIMERO
+    res.status(201).json({
+      success: true,
+      message: 'Cliente registrado correctamente',
+      data: cliente
     });
 
   } catch (error) {
     console.error("ERROR REGISTRO:", error);
     return res.status(500).json({
       success: false,
-      message: 'Hubo un error en el servicio'
+      message: 'Hubo un error en el servicio' + error.message
     });
   }
 };
