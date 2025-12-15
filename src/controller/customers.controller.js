@@ -35,6 +35,15 @@ export const createCustomersController = async (req, res) => {
       });
     }
 
+    const clientEmail = await findCustomerByEmail(email);
+
+    if(clientEmail) {
+        return res.status(400).json({
+            success: false,
+            message: 'El email ya se encuentra registrado, intenta otro',
+        });
+    }
+
     const hashedPassword = await bcrypt.hash(password_hash, 10);
     const code = generateCode();
     const expiration = new Date(Date.now() + 10 * 60 * 1000);
