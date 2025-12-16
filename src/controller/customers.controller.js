@@ -243,8 +243,6 @@ export  const loginCustomerController = async (req, res) => {
         }
 
         //Generar JWT
-
-        // Generar JWT
         const token = jwt.sign(
             { id_uuid: cliente.id_uuid, email: cliente.email },
             process.env.JWT_SECRET,
@@ -398,7 +396,7 @@ export const resetPasswordController = async (req, res) => {
             });
         }
 
-        // 🔐 HASHEAR EL TOKEN (IGUAL QUE EN VALIDATE)
+        // HASHEAR EL TOKEN (IGUAL QUE EN VALIDATE)
         const tokenHash = crypto
             .createHash('sha256')
             .update(token)
@@ -491,7 +489,7 @@ export const getAllCustomersController = async (req, res) => {
     const customers = await getAllCustomersModel();
     res.json(customers);
   } catch (error) {
-    console.error('❌ ERROR getAllCustomers:', error.message);
+    console.error('ERROR getAllCustomers:', error.message);
     res.status(500).json({ message: 'Error al obtener clientes' });
   }
 };
